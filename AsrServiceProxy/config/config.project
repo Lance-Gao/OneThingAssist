@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="config" Version="10.0.0" InternalType="Library">
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <VirtualDirectory Name="detail">
+      <File Name="src/detail/abstract_config_object.cpp"/>
+      <File Name="src/detail/abstract_config_value.cpp"/>
+      <File Name="src/detail/config_base.cpp"/>
+      <File Name="src/detail/config_boolean.cpp"/>
+      <File Name="src/detail/config_concatenation.cpp"/>
+      <File Name="src/detail/config_delayed_merge.cpp"/>
+      <File Name="src/detail/config_delayed_merge_object.cpp"/>
+      <File Name="src/detail/config_double.cpp"/>
+      <File Name="src/detail/config_impl.cpp"/>
+      <File Name="src/detail/config_impl_util.cpp"/>
+      <File Name="src/detail/config_int.cpp"/>
+      <File Name="src/detail/config_int64.cpp"/>
+      <File Name="src/detail/config_null.cpp"/>
+      <File Name="src/detail/config_number.cpp"/>
+      <File Name="src/detail/config_reference.cpp"/>
+      <File Name="src/detail/config_string.cpp"/>
+      <File Name="src/detail/default_transformer.cpp"/>
+      <File Name="src/detail/file_reader.cpp"/>
+      <File Name="src/detail/memo_key.cpp"/>
+      <File Name="src/detail/misc_utils.cpp"/>
+      <File Name="src/detail/parseable.cpp"/>
+      <File Name="src/detail/parser.cpp"/>
+      <File Name="src/detail/path.cpp"/>
+      <File Name="src/detail/path_builder.cpp"/>
+      <File Name="src/detail/resolve_context.cpp"/>
+      <File Name="src/detail/resolve_memos.cpp"/>
+      <File Name="src/detail/resolve_replacer.cpp"/>
+      <File Name="src/detail/resolve_source.cpp"/>
+      <File Name="src/detail/resolve_status.cpp"/>
+      <File Name="src/detail/simple_config.cpp"/>
+      <File Name="src/detail/simple_config_list.cpp"/>
+      <File Name="src/detail/simple_config_object.cpp"/>
+      <File Name="src/detail/simple_config_origin.cpp"/>
+      <File Name="src/detail/simple_includer.cpp"/>
+      <File Name="src/detail/simple_include_context.cpp"/>
+      <File Name="src/detail/string_reader.cpp"/>
+      <File Name="src/detail/substitution_expression.cpp"/>
+      <File Name="src/detail/token.cpp"/>
+      <File Name="src/detail/tokenizer.cpp"/>
+      <File Name="src/detail/tokens.cpp"/>
+      <File Name="src/detail/token_type.cpp"/>
+    </VirtualDirectory>
+    <File Name="src/config.cpp"/>
+    <File Name="src/config_exception.cpp"/>
+    <File Name="src/config_list.cpp"/>
+    <File Name="src/config_object.cpp"/>
+    <File Name="src/config_parse_options.cpp"/>
+    <File Name="src/config_render_options.cpp"/>
+    <File Name="src/config_resolve_options.cpp"/>
+    <File Name="src/config_util.cpp"/>
+    <File Name="src/config_value.cpp"/>
+    <File Name="src/config_value_type.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <VirtualDirectory Name="detail">
+      <File Name="include/detail/abstract_config_object.hpp"/>
+      <File Name="include/detail/abstract_config_value.hpp"/>
+      <File Name="include/detail/config_base.hpp"/>
+      <File Name="include/detail/config_boolean.hpp"/>
+      <File Name="include/detail/config_concatenation.hpp"/>
+      <File Name="include/detail/config_delayed_merge.hpp"/>
+      <File Name="include/detail/config_delayed_merge_object.hpp"/>
+      <File Name="include/detail/config_double.hpp"/>
+      <File Name="include/detail/config_impl.hpp"/>
+      <File Name="include/detail/config_impl_util.hpp"/>
+      <File Name="include/detail/config_int.hpp"/>
+      <File Name="include/detail/config_int64.hpp"/>
+      <File Name="include/detail/config_null.hpp"/>
+      <File Name="include/detail/config_number.hpp"/>
+      <File Name="include/detail/config_reference.hpp"/>
+      <File Name="include/detail/config_string.hpp"/>
+      <File Name="include/detail/default_transformer.hpp"/>
+      <File Name="include/detail/file_reader.hpp"/>
+      <File Name="include/detail/from_map_mode.hpp"/>
+      <File Name="include/detail/full_includer.hpp"/>
+      <File Name="include/detail/instance_utils.hpp"/>
+      <File Name="include/detail/memo_key.hpp"/>
+      <File Name="include/detail/mergeable_value.hpp"/>
+      <File Name="include/detail/misc_utils.hpp"/>
+      <File Name="include/detail/origin_type.hpp"/>
+      <File Name="include/detail/parseable.hpp"/>
+      <File Name="include/detail/parser.hpp"/>
+      <File Name="include/detail/path.hpp"/>
+      <File Name="include/detail/path_builder.hpp"/>
+      <File Name="include/detail/reader.hpp"/>
+      <File Name="include/detail/replaceable_merge_stack.hpp"/>
+      <File Name="include/detail/resolve_context.hpp"/>
+      <File Name="include/detail/resolve_memos.hpp"/>
+      <File Name="include/detail/resolve_replacer.hpp"/>
+      <File Name="include/detail/resolve_source.hpp"/>
+      <File Name="include/detail/resolve_status.hpp"/>
+      <File Name="include/detail/simple_config.hpp"/>
+      <File Name="include/detail/simple_config_list.hpp"/>
+      <File Name="include/detail/simple_config_object.hpp"/>
+      <File Name="include/detail/simple_config_origin.hpp"/>
+      <File Name="include/detail/simple_includer.hpp"/>
+      <File Name="include/detail/simple_include_context.hpp"/>
+      <File Name="include/detail/string_reader.hpp"/>
+      <File Name="include/detail/substitution_expression.hpp"/>
+      <File Name="include/detail/token.hpp"/>
+      <File Name="include/detail/tokenizer.hpp"/>
+      <File Name="include/detail/tokens.hpp"/>
+      <File Name="include/detail/token_type.hpp"/>
+      <File Name="include/detail/unmergeable.hpp"/>
+      <File Name="include/detail/variant_utils.hpp"/>
+    </VirtualDirectory>
+    <File Name="include/config.hpp"/>
+    <File Name="include/config_exception.hpp"/>
+    <File Name="include/config_includer.hpp"/>
+    <File Name="include/config_includer_file.hpp"/>
+    <File Name="include/config_include_context.hpp"/>
+    <File Name="include/config_list.hpp"/>
+    <File Name="include/config_mergeable.hpp"/>
+    <File Name="include/config_object.hpp"/>
+    <File Name="include/config_origin.hpp"/>
+    <File Name="include/config_parseable.hpp"/>
+    <File Name="include/config_parse_options.hpp"/>
+    <File Name="include/config_render_options.hpp"/>
+    <File Name="include/config_resolve_options.hpp"/>
+    <File Name="include/config_syntax.hpp"/>
+    <File Name="include/config_types.hpp"/>
+    <File Name="include/config_util.hpp"/>
+    <File Name="include/config_value.hpp"/>
+    <File Name="include/config_value_type.hpp"/>
+  </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
+  <Settings Type="Static Library">
+    <GlobalSettings>
+      <Compiler Options="--std=c++11" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" C_Options="-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./include"/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="yes">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

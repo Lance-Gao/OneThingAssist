@@ -1,0 +1,1 @@
+./Debug/src_log.cpp.o ./Debug/src_log4cpp.cpp.o ./Debug/src_logapi.cpp.o ./Debug/src_logimpl.cpp.o ./Debug/src_logreceiver.cpp.o ./Debug/src_regmatch.cpp.o

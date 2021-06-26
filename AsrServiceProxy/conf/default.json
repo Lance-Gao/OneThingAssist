@@ -1,0 +1,71 @@
+{
+    "configuration": {
+        "id": "default_id",
+        "source": "rtsp: //",
+        "enable_face_detect": "true",
+        "enable_push_img": "false",
+        "delay_in_ms": 0,
+        "gpu_id": 0,
+        "live": 1,
+        "save_images_count": 100,
+        "face_track_count": 10,
+        "max_track_fps_when_no_face": 5,
+        "heartbeat_interval": 15000,
+        "is_save_bkimg": false,
+        "bkimg_resize_ratio": 1.0,
+        "bkimg_dir": "bkimages",
+        "recognize": {
+            "mask": "",
+            "recognize_server": "",
+            "face_trail_server": "",
+            "worker_server": "http://127.0.0.1:8080"
+            "recognize_times_per_face": 1
+        },
+        "original_recording": {
+            "is_recording": false,
+            "location": "/recording/original",
+            "max_duration_in_seconds": 3600,
+            "hls_slice_duration_in_seconds": 5
+        },
+        "faced_recording": {
+            "is_recording": false,
+            "location": "/recording/faced",
+            "max_duration_in_seconds": 3600,
+            "hls_slice_duration_in_seconds": 5
+        },
+        "publish": {
+            "is_publish": false,
+            "publish_url": "rtmp: //"
+        },
+        "face_quality": {
+            "minimum_face_in_pixels": 80,
+            "pitch_threshold": {
+                "from": -60,
+                "to": 60
+            },
+            "yaw_threshold": {
+                "from": -60,
+                "to": 60
+            },
+            "roll_threshold": {
+                "from": -60,
+                "to": 60
+            },
+            "first_blurry_threshold": 0.3,
+            "blurry_threshold": 0.8,
+            "bright_threshold": 256,
+            "occlusion_threshold": 1,
+            "confidence_threshold": 0.3,
+            "min_frame_interval": 5,
+            "quality_duration_in_ms": 15000,
+            "quality_size_weight": 1.0,
+            "quality_angle_weight": 1.0
+        },
+        "push_img": {
+            "server_to_push": "",
+            "resize_ratio": 0.5,
+            "periold_in_ms": 2000,
+            "quality": 80
+        }
+    }
+}
