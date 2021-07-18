@@ -12,6 +12,7 @@
 #include <signal.h>
 #include <thread>
 #include <unistd.h>
+#include "pipeline.h"
 
 void module_log_init(void);
 void module_log_fini();
@@ -22,13 +23,10 @@ Pipeline::Pipeline() {
 Pipeline::~Pipeline() {
 }
 
-int Application::print_help_or_version(char** argv) {
+int Pipeline::print_help_or_version(char** argv) {
     if (strncmp(argv[1], "-help", strlen("-help")) == 0 ||
         strncmp(argv[1], "--help", strlen("--help")) == 0) {
         printf("%s\n", _conf.get_command_line_help());
-    } else if (strncmp(argv[1], "-version", strlen("-version")) == 0 ||
-              strncmp(argv[1], "--version", strlen("--version")) == 0) {
-        printf("%s\n", _conf.get_app_version().c_str());
     } else {
         printf("Unknown option!\n");
     }
@@ -49,27 +47,17 @@ int Pipeline::run(int argc, char** argv) {
 
     // change work dir and init log module
     std::stringstream path;
-    path << _conf.get_working_dir() << "/" << _conf.get_id();
+    path << _conf.get_working_dir() << "/log";
     mkdir(path.str().c_str(), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH);
-
-    // check if instance id is running
-    long running_pid = 0;
-    if (already_running(path.str().c_str(), &running_pid) != 0) {
-        if (running_pid != 0) {
-            printf("%s: %d\n", "[PID]", running_pid);
-        }
-        printf("camera id is already running\n");
-        return -1;
-    }
 
     printf("%s: %d\n", "[PID]", getpid());
     std::cout << "arg count:" << argc << std::endl;
     for (int i = 0; i < argc; i++) {
-        cout << i << ":" << argv[i] << std::endl;
+        std::cout << i << ":" << argv[i] << std::endl;
     }
 
-    cout << "local time: " <<  TimeUtil::now_local_time() << std::endl;
-    cout << "utc time: " << TimeUtil::now_utc_time() << std::endl;
+    std::cout << "local time: " <<  TimeUtil::now_local_time() << std::endl;
+    std::cout << "utc time: " << TimeUtil::now_utc_time() << std::endl;
     chdir(path.str().c_str());
 
     module_log_init();
@@ -84,16 +72,13 @@ int Pipeline::run(int argc, char** argv) {
 
     setpriority(PRIO_PROCESS, getpid(), -8);
 
-    _exit = 0;
-    std::thread mon(&Application::report, this);
-    int ret = _pipeline.run(&_conf);
-    _exit = 1;
-
-    if (mon.joinable()) {
-        mon.join();
+    // todo loop
+    while (true) {
+        AIP_LOG_NOTICE("in loop for test modify by lance 2021.07.04");
+        sleep(10);
     }
 
     module_log_fini();
 
-    return ret;
+    return 0;
 }

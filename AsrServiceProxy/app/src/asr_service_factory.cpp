@@ -1,4 +1,5 @@
 #include "asr_service_factory.h"
+#include "bd_asr_service.h"
 
 AsrServiceFactory::AsrServiceFactory(char c) {
     switch(c) {

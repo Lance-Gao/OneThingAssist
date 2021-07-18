@@ -5,7 +5,10 @@
 
 class BdAsrService : public AsrService {
 public:
-    virtual void Call();
+    virtual ~BdAsrService();
+
+    virtual void call();
+    virtual bool init(const Config& conf);
 };
 
 #endif  /*_BD_ASR_SERVICE_H_*/
