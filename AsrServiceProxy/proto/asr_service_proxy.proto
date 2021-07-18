@@ -4,7 +4,6 @@ package onething;
 option cc_generic_services = true;
 
 message AsrRequest {
-    required bytes image = 1;
     optional string type = 2;
 };
 
