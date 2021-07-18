@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-Project(sfgTracerParent)
+Project(AsrServiceProxy)
 
 set(CMAKE_C_FLAGS "-g -Wall")
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -pthread")

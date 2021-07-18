@@ -1,7 +1,7 @@
 #ifndef UTILS_UTILS_HPP
 #define UTILS_UTILS_HPP
 
-#include <opencv2/imgproc.hpp>
+#include "opencv2/imgproc.hpp"
 #include "aip_common.hpp"
 
 #define kAipUtcTimeFormat "%Y-%m-%d %H:%M:%S"

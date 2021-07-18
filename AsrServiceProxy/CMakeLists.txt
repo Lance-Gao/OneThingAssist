@@ -7,4 +7,8 @@ set (BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/objs/)
 set (EXECUTABLE_OUTPUT_PATH ${BINARY_DIR})
 set (LIBRARY_OUTPUT_PATH ${BINARY_DIR})
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/log)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/app)

@@ -10,8 +10,8 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <sstream>
-#include <opencv/cv.h>
-#include <opencv2/opencv.hpp>
+#include "opencv2/opencv.hpp"
+#include "opencv2/imgcodecs/legacy/constants_c.h"
 #include <sys/prctl.h>
 #include <signal.h>
 #include "base64.hpp"
