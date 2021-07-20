@@ -13,6 +13,7 @@
 #include <thread>
 #include <unistd.h>
 #include "pipeline.h"
+#include "asr_proxy_impl.h"
 
 void module_log_init(void);
 void module_log_fini();
@@ -80,5 +81,30 @@ int Pipeline::run(int argc, char** argv) {
 
     module_log_fini();
 
+    return 0;
+}
+
+int start_brpc_server() {
+    AsrProxyImpl asr_proxy_impl;
+
+    if (_brpc_server.AddService(&asr_proxy_impl,
+                                brpc::SERVER_DOESNT_OWN_SERVICE) != 0) {
+        AIP_LOG_FATAL("Fail to add service");
+        return -1;
+    }
+
+    brpc::ServerOptions options;
+    options.idle_timeout_sec = FLAGS_idle_timeout_s;
+    options.max_concurrency = FLAGS_max_concurrency;
+    if (_brpc_server.Start(FLAGS_port, &options) != 0) {
+      LOG(ERROR) << "Fail to start EchoServer";
+      return -1;
+    }
+
+
+    return 0;
+}
+
+int stop_brpc_server() {
     return 0;
 }
