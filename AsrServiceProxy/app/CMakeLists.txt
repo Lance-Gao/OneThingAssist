@@ -26,6 +26,23 @@ if(${GFLAGS_NS} STREQUAL "GFLAGS_NAMESPACE")
     )
 endif()
 
+find_path(LEVELDB_INCLUDE_PATH NAMES leveldb/db.h)
+find_library(LEVELDB_LIB NAMES leveldb)
+if ((NOT LEVELDB_INCLUDE_PATH) OR (NOT LEVELDB_LIB))
+    message(FATAL_ERROR "Fail to find leveldb")
+endif()
+include_directories(${LEVELDB_INCLUDE_PATH})
+
+find_library(SSL_LIB NAMES ssl)
+if (NOT SSL_LIB)
+    message(FATAL_ERROR "Fail to find ssl")
+endif()
+
+find_library(CRYPTO_LIB NAMES crypto)
+if (NOT CRYPTO_LIB)
+    message(FATAL_ERROR "Fail to find crypto")
+endif()
+
 set(CMAKE_CPP_FLAGS "-DGFLAGS_NS=${GFLAGS_NS}")
 set(CMAKE_C_FLAGS "-g -Wall -fpermissive")
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -pthread -fpermissive")
@@ -45,7 +62,10 @@ add_executable(asr_service_proxy ${FILE_LISTS} ${SRC_DIR}/main.cpp ${PROTO_SRC} 
 target_link_libraries(asr_service_proxy "-Xlinker \"-(\"")
 
 # log and utils
-target_link_libraries(asr_service_proxy log utils ${GFLAGS_LIBRARY} ${PROTOBUF_LIBRARIES})
+target_link_libraries(asr_service_proxy log utils ${GFLAGS_LIBRARY} ${PROTOBUF_LIBRARIES}
+                                        ${LEVELDB_LIB}
+                                        ${SSL_LIB}
+                                        ${CRYPTO_LIB})
 
 find_library(EXTRA_LIBRARY_COM_LOG comlog HINTS ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/lib)
 target_link_libraries(asr_service_proxy ${EXTRA_LIBRARY_COM_LOG})

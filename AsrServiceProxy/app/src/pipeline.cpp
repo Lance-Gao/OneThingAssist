@@ -70,41 +70,47 @@ int Pipeline::run(int argc, char** argv) {
 
     // avoid the crash for SIGPIPE
     signal(SIGPIPE, SIG_IGN);
-
     setpriority(PRIO_PROCESS, getpid(), -8);
 
-    // todo loop
-    while (true) {
+    _asr_proxy_impl = std::make_shared<AsrProxyImpl>();
+    start_brpc_server(_asr_proxy_impl);
+
+    while (!_stop) {
         AIP_LOG_NOTICE("in loop for test modify by lance 2021.07.04");
         sleep(10);
     }
 
+    stop_brpc_server(_conf.get_logoff_ms());
     module_log_fini();
 
     return 0;
 }
 
-int start_brpc_server() {
-    AsrProxyImpl asr_proxy_impl;
-
-    if (_brpc_server.AddService(&asr_proxy_impl,
+int Pipeline::start_brpc_server(std::shared_ptr<AsrProxyImpl>& asr_proxy_impl) {
+    if (_brpc_server.AddService(asr_proxy_impl.get(),
                                 brpc::SERVER_DOESNT_OWN_SERVICE) != 0) {
         AIP_LOG_FATAL("Fail to add service");
         return -1;
     }
 
     brpc::ServerOptions options;
-    options.idle_timeout_sec = FLAGS_idle_timeout_s;
-    options.max_concurrency = FLAGS_max_concurrency;
-    if (_brpc_server.Start(FLAGS_port, &options) != 0) {
+    options.idle_timeout_sec = -1/*idle_timeout_s*/;
+    options.max_concurrency = _conf.get_concurrent_number();
+    if (_brpc_server.Start(_conf.get_server_port(), &options) != 0) {
       LOG(ERROR) << "Fail to start EchoServer";
       return -1;
     }
 
-
     return 0;
 }
 
-int stop_brpc_server() {
+int Pipeline::stop_brpc_server(int log_off_ms) {
+    if (log_off_ms > 0) {
+        _brpc_server.Stop(log_off_ms);
+    } else {
+        AIP_LOG_FATAL("log_off_ms is less than 0.");
+        return -1;
+    }
+
     return 0;
 }

@@ -1,13 +1,15 @@
 {
     "configuration": {
-		"enable_asr_service": "true",
-		"asr_api_source": "baidu",
-		"app_key": "kVcnfD9iW2XVZSMaLMrtLYIz",
+        "enable_asr_service": "true",
+        "asr_api_source": "baidu",
+        "app_key": "kVcnfD9iW2XVZSMaLMrtLYIz",
         "app_secret_key": "O9o1O213UgG5LFn0bDGNtoRN3VWl2du6",
         "asr_server": "http://vop.baidu.com/server_api",
         "audio_format": "pcm",
         "audio_type": 1537,
         "capacity_scope": "audio_voice_assistant_get",
-		"concurrent-number": 2
+        "concurrent_number": 2,
+        "log_off_ms": 2000,
+        "server_port": 8005
     }
 }

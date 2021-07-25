@@ -23,6 +23,8 @@ typedef enum _opt_id {
     OPT_CAPACITY_SCOPE,
     OPT_CONCURRENT_NUMBER,
     OPT_ENABLE_ASR_SERVICE,
+    OPT_LOG_OFF_MS,
+    OPT_SERVER_PORT,
 } opt_id_t;
 
 typedef struct _option_entry {
@@ -43,6 +45,8 @@ const static option_entry_t s_options[] = {
     { "--capacity-scope", "the flag of audio capacity, for bd asr api", "audio_voice_assistant_get" },
     { "--concurrent-number", "the concurrent number of calling asr service", "2" },
     { "--enable-asr-service", "enable asr service", "true" },
+    { "--log-off-ms", "the waiting time of connection disconnected", "2000" },
+    { "--server-port", "the server port", "8005" },
     { 0, 0, 0 }
 };
 
@@ -57,6 +61,8 @@ static struct option s_long_options[] = {
     { "capacity-scope", required_argument, 0, OPT_CAPACITY_SCOPE},
     { "concurrent-number", required_argument, 0, OPT_CONCURRENT_NUMBER},
     { "enable-asr-service", required_argument, 0, OPT_ENABLE_ASR_SERVICE},
+    { "log-off-ms", required_argument, 2000, OPT_LOG_OFF_MS},
+    { "server-port", required_argument, 8005, OPT_SERVER_PORT},
     {0, 0, 0}
     };
 
@@ -78,6 +84,8 @@ void Config::init_default() {
     this->_audio_type = 1537;
     this->_capacity_scope = "audio_voice_assistant_get";
     this->_concurrent_number = 2;
+    this->_log_off_ms = 2000;
+    this->_server_port = 8005;
 }
 
 const char* Config::get_command_line_help() {
@@ -155,6 +163,14 @@ int Config::load_from_file(const char* file) {
                     if (!concurrent_number.isNull()) {
                         set_concurrent_number(StringUtil::trim(concurrent_number.asString()).c_str());
                     }
+                    Json::Value& log_off_ms = conf["log_off_ms"];
+                    if (!log_off_ms.isNull()) {
+                        set_logoff_ms(StringUtil::trim(log_off_ms.asString()).c_str());
+                    }
+                    Json::Value& server_port = conf["server_port"];
+                    if (!server_port.isNull()) {
+                        set_server_port(StringUtil::trim(server_port.asString()).c_str());
+                    }
                 }
             }
         } else {
@@ -198,7 +214,15 @@ void Config::set_capacity_scope(const char* optarg) {
 }
 
 void Config::set_concurrent_number(const char* optarg) {
-    this->_concurrent_number = string_to_int(optarg);;
+    this->_concurrent_number = string_to_int(optarg);
+}
+
+void Config::set_logoff_ms(const char* optarg) {
+    this->_log_off_ms = string_to_int(optarg);
+}
+
+void Config::set_server_port(const char* optarg) {
+    this->_server_port = string_to_int(optarg);
 }
 
 int Config::read_file_content(const char* file, std::string& result) {
@@ -286,10 +310,21 @@ int Config::load_command_line(char* const* argv, int argc) {
         }
         break;
 
+        case OPT_LOG_OFF_MS: {
+            set_logoff_ms(cleaned_optarg);
+        }
+        break;
+
+        case OPT_SERVER_PORT: {
+            set_server_port(cleaned_optarg);
+        }
+        break;
+
         case OPT_ENABLE_ASR_SERVICE: {
             set_enable_asr_service(StringUtil::to_bool(cleaned_optarg));
         }
         break;
+
         default: {
         }
         break;
@@ -343,6 +378,14 @@ const std::string& Config::get_capacity_scope() {
 
 int Config::get_concurrent_number() {
     return this->_concurrent_number;
+}
+
+int Config::get_server_port() {
+    return this->_server_port;
+}
+
+int Config::get_logoff_ms() {
+    return this->_log_off_ms;
 }
 
 bool Config::is_enable_asr_service() {
@@ -421,6 +464,7 @@ std::string Config::to_string() {
     builder << "audio type:           " << get_audio_type() << std::endl;
     builder << "asr server:           " << get_asr_server() << std::endl;
     builder << "concurrent number:    " << get_concurrent_number() << std::endl;
+    builder << "server port:    " << get_server_port() << std::endl;
     return builder.str();
 }
 
