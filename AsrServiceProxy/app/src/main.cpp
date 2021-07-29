@@ -6,6 +6,11 @@ int main(int argc, char** argv) {
 
     Pipeline pipeline;
     ret = pipeline.run(argc, argv);
+    if (ret == 0) {
+      std::cout << "main ret is "
+                << ret << "."
+                << std::endl;
+    }
 
     return ret;
 }
