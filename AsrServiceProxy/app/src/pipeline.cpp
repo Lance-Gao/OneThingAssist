@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include "pipeline.h"
 #include "asr_proxy_impl.h"
+#include "asr_service_factory.h"
 
 void module_log_init(void);
 void module_log_fini();
@@ -22,6 +23,13 @@ Pipeline::Pipeline() {
 }
 
 Pipeline::~Pipeline() {
+}
+
+int Pipeline::get_asr_service() {
+    AsrServiceFactory* factory = AsrServiceFactory::get_instance();
+    _asr_service = factory->get_asr_service(AsrServiceFactory::get_asr_sourcetype(
+					    _conf.get_asrapi_source()));
+    return 0;
 }
 
 int Pipeline::print_help_or_version(char** argv) {
@@ -72,7 +80,9 @@ int Pipeline::run(int argc, char** argv) {
     signal(SIGPIPE, SIG_IGN);
     setpriority(PRIO_PROCESS, getpid(), -8);
 
-    _asr_proxy_impl = std::make_shared<AsrProxyImpl>();
+    get_asr_service();
+
+    _asr_proxy_impl = std::make_shared<AsrProxyImpl>(_asr_service);
     start_brpc_server(_asr_proxy_impl);
 
     while (!_stop) {

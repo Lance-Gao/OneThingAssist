@@ -22,7 +22,7 @@ std::shared_ptr<AsrService> AsrServiceFactory::get_asr_service(ASR_SOURCE_TYPE a
     return _asr_service;
 }
 
-ASR_SOURCE_TYPE get_asr_sourcetype(const std::string& asr_source) {
+ASR_SOURCE_TYPE AsrServiceFactory::get_asr_sourcetype(const std::string& asr_source) {
     if (!asr_source.compare("baidu")) {
         return ASR_SOURCE_TYPE::BAIDU_ASR;
     }

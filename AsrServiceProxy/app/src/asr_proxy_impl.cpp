@@ -1,6 +1,7 @@
 #include "asr_proxy_impl.h"
 
-AsrProxyImpl::AsrProxyImpl() {
+AsrProxyImpl::AsrProxyImpl(std::shared_ptr<AsrService>& asr_service) :
+    _asr_service(asr_service) {
 }
 
 AsrProxyImpl::~AsrProxyImpl() {

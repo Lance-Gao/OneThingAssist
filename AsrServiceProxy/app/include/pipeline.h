@@ -16,6 +16,7 @@ public:
     int run(int argc, char** argv);
 
 private:
+    int get_asr_service();
     int print_help_or_version(char** argv);
     int start_brpc_server(std::shared_ptr<AsrProxyImpl>& asr_proxy_impl);
     int stop_brpc_server(int log_off_ms);

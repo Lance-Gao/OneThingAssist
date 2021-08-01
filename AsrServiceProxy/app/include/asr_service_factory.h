@@ -13,11 +13,11 @@ class AsrServiceFactory {
 public:
     ~AsrServiceFactory();
     static AsrServiceFactory* get_instance();
+    static ASR_SOURCE_TYPE get_asr_sourcetype(const std::string& asr_source);
     std::shared_ptr<AsrService> get_asr_service(ASR_SOURCE_TYPE asr_source_type);
 
 private:
     AsrServiceFactory();
-    ASR_SOURCE_TYPE get_asr_sourcetype(const std::string& asr_source);
 
     static AsrServiceFactory* s_asr_service_factory;
     std::shared_ptr<AsrService> _asr_service;
