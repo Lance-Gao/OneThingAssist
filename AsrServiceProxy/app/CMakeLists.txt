@@ -43,6 +43,9 @@ if (NOT CRYPTO_LIB)
     message(FATAL_ERROR "Fail to find crypto")
 endif()
 
+find_package(CURL REQUIRED)
+include_directories(${CURL_INCLUDE_DIR})
+
 set(CMAKE_CPP_FLAGS "-DGFLAGS_NS=${GFLAGS_NS}")
 set(CMAKE_C_FLAGS "-g -Wall -fpermissive")
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -pthread -fpermissive")
@@ -65,7 +68,8 @@ target_link_libraries(asr_service_proxy "-Xlinker \"-(\"")
 target_link_libraries(asr_service_proxy log utils ${GFLAGS_LIBRARY} ${PROTOBUF_LIBRARIES}
                                         ${LEVELDB_LIB}
                                         ${SSL_LIB}
-                                        ${CRYPTO_LIB})
+                                        ${CRYPTO_LIB}
+					${CURL_LIBRARY})
 
 find_library(EXTRA_LIBRARY_COM_LOG comlog HINTS ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/lib)
 target_link_libraries(asr_service_proxy ${EXTRA_LIBRARY_COM_LOG})
