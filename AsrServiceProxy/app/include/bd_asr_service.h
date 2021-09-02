@@ -20,12 +20,15 @@ class BdAsrService : public AsrService {
 public:
     virtual ~BdAsrService();
 
-    virtual void call();
+    virtual int call(const std::string& audio_data);
     virtual bool init(const Config& conf);
 
 private:
     void deinit();
     void get_token();
+    ReturnCode handle_response(const char* response,
+                               std::string& token,
+                               std::string& scopes);
     bool speech_get_token(const char *api_key, const char *secret_key, const char *scope, char *token);
     bool start_gettoken_thread();
 

@@ -12,11 +12,10 @@ void AsrProxyImpl::asr(google::protobuf::RpcController* cntl_base,
                         onething::AsrResponse* response,
                         google::protobuf::Closure* done) {
     brpc::ClosureGuard done_guard(done);
-    brpc::Controller* cntl =
-    static_cast<brpc::Controller*>(cntl_base);
+    brpc::Controller* cntl = static_cast<brpc::Controller*>(cntl_base);
 
     // Echo request and its attachment                                                                                             
-    response->set_value(request->value());
+    response->set_code(0/*request->value()*/);  // tmply mask by lance 2021.09.02
     if (true) {
         cntl->response_attachment().append(cntl->request_attachment());
     }

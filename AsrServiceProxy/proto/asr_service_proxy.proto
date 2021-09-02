@@ -4,7 +4,7 @@ package onething;
 option cc_generic_services = true;
 
 message AsrRequest {
-    optional string type = 2;
+    optional string value = 1;
 };
 
 message AsrResponse {
