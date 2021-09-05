@@ -29,6 +29,13 @@ int Pipeline::get_asr_service() {
     AsrServiceFactory* factory = AsrServiceFactory::get_instance();
     _asr_service = factory->get_asr_service(AsrServiceFactory::get_asr_sourcetype(
 					    _conf.get_asrapi_source()));
+    // init asr service
+    bool ret = _asr_service->init(_conf);
+    if (ret != true) {
+        AIP_LOG_FATAL("asr service init failed!");
+        return -1;
+    }
+
     return 0;
 }
 
@@ -80,7 +87,10 @@ int Pipeline::run(int argc, char** argv) {
     signal(SIGPIPE, SIG_IGN);
     setpriority(PRIO_PROCESS, getpid(), -8);
 
-    get_asr_service();
+    if (get_asr_service() != 0) {
+        AIP_LOG_FATAL("get asr service failed!");
+        return -1;
+    }
 
     _asr_proxy_impl = std::make_shared<AsrProxyImpl>(_asr_service);
     start_brpc_server(_asr_proxy_impl);
