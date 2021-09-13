@@ -33,7 +33,7 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, char **result) {
   return result_len;
 }
 
-int BdAsrService::call(const std::string& audio_data_base64) {
+int BdAsrService::call(const char* audio_data, int audio_data_size, std::string& asr_result) {
     AIP_LOG_NOTICE("BdAsrService call.");
 
     char url[300];
@@ -65,14 +65,13 @@ int BdAsrService::call(const std::string& audio_data_base64) {
 
     int content_len = 0;
     char *result = NULL;
-    std::string audio_data_binary = base64_decode(audio_data_base64);
     curl_easy_setopt(curl, CURLOPT_URL, url);
     curl_easy_setopt(curl, CURLOPT_POST, 1);
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5); // 连接5s超时
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, 60); // 整体请求60s超时
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist); // 添加http header Content-Type
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, audio_data_binary.c_str()); // 音频数据
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, audio_data_binary.size()); // 音频数据长度
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, audio_data); // 音频数据
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, audio_data_size); // 音频数据长度
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);  // 需要释放
 
@@ -89,6 +88,11 @@ int BdAsrService::call(const std::string& audio_data_base64) {
         res = ERROR_ASR_CURL;
     } else {
         printf("YOUR FINAL RESULT: %s\n", result);
+        if (handle_asr_result(result, asr_result) == RETURN_OK) {
+	  res = RETURN_OK;
+	} else {
+	  res = RETURN_ERROR;
+	}
     }
 
     curl_slist_free_all(headerlist);
@@ -114,6 +118,24 @@ void BdAsrService::deinit() {
     curl_global_cleanup();
 }
 
+ReturnCode BdAsrService::handle_asr_result(const char* response,
+                                           std::string& asr_result) {
+    Json::Value root(Json::objectValue);
+    std::string msg;
+    if (!JsonUtils::load_json(response, root, msg)) {
+        AIP_LOG_FATAL("Parse json failed!");
+	return RETURN_ERROR;
+    }
+
+    asr_result = root["result"][0].asString();
+    if (asr_result.empty()) {
+      AIP_LOG_FATAL("parse asr result error: %s\n", response);
+      return RETURN_ERROR;
+    }
+
+    return RETURN_OK;
+}
+
 ReturnCode BdAsrService::handle_response(const char* response,
                                           std::string& token,
                                           std::string& scopes) {
@@ -121,7 +143,7 @@ ReturnCode BdAsrService::handle_response(const char* response,
     std::string msg;
     if (!JsonUtils::load_json(response, root, msg)) {
         AIP_LOG_FATAL("Parse json failed!");
-	return -1;
+	return RETURN_ERROR;
     }
 
     token = root["access_token"].asString();
@@ -147,6 +169,7 @@ void BdAsrService::get_token() {
 	char url[200];
 	char *response = NULL;
 	char api_token_url[] = "http://openapi.baidu.com/oauth/2.0/token";
+        std::string request_token;
 
 	snprintf(url, 200, url_pattern, api_token_url, _conf.get_app_key().c_str(), _conf.get_appsecret_key().c_str());
         AIP_LOG_NOTICE("url is: %s", url);
@@ -164,11 +187,10 @@ void BdAsrService::get_token() {
 	  AIP_LOG_FATAL("perform curl error:%d, %s.\n", res, curl_easy_strerror(res_curl));
 	  res = ERROR_TOKEN_CURL;
 	} else {
-	    std::string token;
 	    std::string scope;
-	    res = handle_response(response, token, scope); // 解析token，结果保存在token里
+	    res = handle_response(response, request_token, scope); // 解析token，结果保存在token里
 	    if (res == RETURN_OK) {
-	        AIP_LOG_NOTICE("token: %s", token.c_str());
+	        AIP_LOG_NOTICE("token: %s", request_token.c_str());
 	    }
 	}
         if (response != NULL) {
@@ -182,7 +204,7 @@ void BdAsrService::get_token() {
             continue;
 	} else {
 	    std::lock_guard<std::mutex> lc(_token_mutex);
-	    _asr_token.assign(token);
+	    _asr_token.assign(request_token);
 	}
 	std::this_thread::sleep_for(std::chrono::seconds(sleep_seconds));
         {

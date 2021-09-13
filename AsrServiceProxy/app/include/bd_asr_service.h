@@ -6,26 +6,18 @@
 #include "asr_service.h"
 #include "config.h"
 
-typedef enum {
-  RETURN_OK = 0, // 返回正常                                                                                                         
-  RETURN_ERROR = 1, // 返回错误                                                                                                      
-  ERROR_TOKEN_CURL = 13, // TOKEN CURL 调用错误                                                                                      
-  ERROR_TOKEN_PARSE_ACCESS_TOKEN = 15,  // access_token字段在返回结果中不存在                                                        
-  ERROR_TOKEN_PARSE_SCOPE = 16, // 解析scope字段，或者scope不存在                                                                    
-  ERROR_ASR_FILE_NOT_EXIST = 101, // 本地文件不存在                                                                                  
-  ERROR_ASR_CURL = 102 // 识别 curl 错误                                                                                             
-} ReturnCode;
-
 class BdAsrService : public AsrService {
 public:
     virtual ~BdAsrService();
 
-    virtual int call(const std::string& audio_data);
+    virtual int call(const char* audio_data, int audio_data_size, std::string& asr_result);
     virtual bool init(const Config& conf);
 
 private:
     void deinit();
     void get_token();
+    ReturnCode handle_asr_result(const char* response,
+                                 std::string& asr_result);
     ReturnCode handle_response(const char* response,
                                std::string& token,
                                std::string& scopes);
